@@ -51,7 +51,15 @@ class HopenetHead(BaseHead):
         reg_loss = reg_yaw_loss + reg_pitch_loss + reg_roll_loss
         reg_loss *= self.alpha
 
-        return {"cls_loss": cls_loss, "reg_loss": reg_loss}
+        losses = dict()
+        losses["cls_loss"] = cls_loss
+        losses["reg_loss"] = reg_loss
+        losses["num_samples"] = cls_loss.new(1).fill_(len(feature))
+        losses["yaw_dist"] = reg_yaw_loss
+        losses["pitch_dist"] = reg_pitch_loss
+        losses["roll_dist"] = reg_roll_loss
+
+        return losses
 
     def simple_test(self, feature):
         cls_yaw_p = self.fc_yaw(feature)

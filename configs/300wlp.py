@@ -21,7 +21,7 @@ test_pipeline = [
     dict(type="ToTensor", keys=["gt_labels", "gt_angles"]),
     dict(type="Collect", keys=["img", "gt_labels", "gt_angles"])
 ]
-data = dict(samples_per_gpu=8,
+data = dict(samples_per_gpu=128,
             workers_per_gpu=1,
             train=dict(type=dataset_type,
                        data_prefix="./data/300W_LP",
