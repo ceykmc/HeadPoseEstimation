@@ -40,25 +40,31 @@ model = dict(type="HopeNet",
              head=dict(type="HopenetHead",
                        in_channels=1024,
                        num_bins=66,
-                       alpha=0.001))
+                       alpha=0.001),
+             norm_eval=True)
 
 # optimizer
-optimizer = dict(type="Adam", lr=0.001, weight_decay=0.0005)
+optimizer = dict(
+    type="Adam",
+    lr=0.001,
+    weight_decay=0.0005,
+    paramwise_cfg=dict(custom_keys={".head": dict(lr_multi=5)}))
 optimizer_config = dict(grad_clip=None)
 # learning policy
 lr_config = dict(policy="step", step=[50, 80])
 total_epochs = 100
 
 # checkpoint saving
-checkpoint_config = dict(interval=10)
+checkpoint_config = dict(interval=1, create_symlink=False)
 # yapf:disable
 log_config = dict(
-    interval=100,
+    interval=10,
     hooks=[
         dict(type="TextLoggerHook"),
         dict(type="TensorboardLoggerHook")
     ])
 # yapf:enable
+evaluation = dict(interval=10)  # do evaluation every 10 epoches
 dist_params = dict(backend="nccl")
 log_level = "INFO"
 load_from = None
