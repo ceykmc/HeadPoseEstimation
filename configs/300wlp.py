@@ -51,7 +51,7 @@ optimizer = dict(
     paramwise_cfg=dict(custom_keys={".head": dict(lr_multi=5)}))
 optimizer_config = dict(grad_clip=None)
 # learning policy
-lr_config = dict(policy="step", step=[50, 80])
+lr_config = dict(policy="fixed")
 total_epochs = 100
 
 # checkpoint saving
