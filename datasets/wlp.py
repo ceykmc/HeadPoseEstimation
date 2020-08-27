@@ -8,11 +8,10 @@ from mmcls.datasets import DATASETS, BaseDataset
 
 @DATASETS.register_module()
 class W300LP(BaseDataset):
-    # dataset_names = [
-    #     "AFW", "AFW_Flip", "HELEN", "HELEN_Flip", "IBUG", "IBUG_Flip", "LFPW",
-    #     "LFPW_Flip"
-    # ]
-    dataset_names = ["AFW"]
+    dataset_names = [
+        "AFW", "AFW_Flip", "HELEN", "HELEN_Flip", "IBUG", "IBUG_Flip", "LFPW",
+        "LFPW_Flip"
+    ]
 
     def __init__(self, data_prefix, pipeline, ann_file=None, test_mode=False):
         super().__init__(data_prefix, pipeline, ann_file, test_mode)
