@@ -39,7 +39,7 @@ model = dict(type="HopeNet",
              neck=dict(type="GlobalAveragePooling"),
              head=dict(type="HopenetHead",
                        in_channels=1024,
-                       num_bins=66,
+                       num_bins=67,
                        alpha=0.001),
              norm_eval=True)
 
