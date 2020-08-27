@@ -2,18 +2,23 @@ import os
 from collections import OrderedDict
 
 import torch
+from torch.nn.modules.batchnorm import _BatchNorm
+
 from mmcls.models import (CLASSIFIERS, BaseClassifier, build_backbone,
                           build_head, build_neck)
 
 
 @CLASSIFIERS.register_module()
 class HopeNet(BaseClassifier):
-    def __init__(self, backbone, neck, head, pretrained=None):
+    def __init__(self, backbone, neck, head, norm_eval=True, pretrained=None):
         super().__init__()
         self.backbone = build_backbone(backbone)
         self.neck = build_neck(neck)
         self.head = build_head(head)
         self.init_weights(pretrained=pretrained)
+        for name, m in self.named_modules():  # frozen batch normalization
+            if isinstance(m, _BatchNorm):
+                m.eval()
 
     def init_weights(self, pretrained=None):
         if pretrained and os.path.exists(pretrained):
