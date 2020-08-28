@@ -57,7 +57,6 @@ class TestDataset(unittest.TestCase):
 
     def test_sample_label(self):
         train_dataset = build_dataset(self.cfg.data.train)
-        sample = train_dataset[1049]
         for i in tqdm(range(len(train_dataset))):
             sample = train_dataset[i]
             labels = sample["gt_labels"].numpy().tolist()

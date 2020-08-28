@@ -1,6 +1,5 @@
 import os
 
-import mmcv
 import cv2
 import numpy as np
 import scipy.io
@@ -79,6 +78,8 @@ class LoadImageFromFileWLP(LoadImageFromFile):
                                        to_rgb=False)
 
         bins = np.array(range(-99, 102, 3))
-        results["gt_labels"] = np.clip(np.digitize(angles, bins) - 1, 0, len(bins) - 1)
+        results["gt_labels"] = np.clip(
+            np.digitize(angles, bins) - 1, 0,
+            len(bins) - 1)
         results["gt_angles"] = np.array(angles, dtype=np.float32)
         return results

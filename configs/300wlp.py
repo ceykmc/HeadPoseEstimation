@@ -55,7 +55,7 @@ lr_config = dict(policy="fixed")
 total_epochs = 100
 
 # checkpoint saving
-checkpoint_config = dict(interval=1, create_symlink=False)
+checkpoint_config = dict(interval=10, create_symlink=False)
 # yapf:disable
 log_config = dict(
     interval=100,
@@ -64,7 +64,7 @@ log_config = dict(
         dict(type="TensorboardLoggerHook")
     ])
 # yapf:enable
-evaluation = dict(interval=10)  # do evaluation every 10 epoches
+evaluation = dict(interval=10)  # do evaluation every 'interval' epoches
 dist_params = dict(backend="nccl")
 log_level = "INFO"
 load_from = None
