@@ -5,10 +5,11 @@ import unittest
 
 import cv2
 import numpy as np
-from mmcv import Config
+from tqdm import tqdm
 
 import datasets  # noqa: F401,F403
 from mmcls.datasets import build_dataset
+from mmcv import Config
 
 
 def argument_parser():
@@ -53,6 +54,15 @@ class TestDataset(unittest.TestCase):
         random_train_data = train_dataset[random_index]
         print(F"image shape: {random_train_data['img'].data.shape}")
         self.show_train_image(random_train_data, "train_sample")
+
+    def test_sample_label(self):
+        train_dataset = build_dataset(self.cfg.data.train)
+        sample = train_dataset[1049]
+        for i in tqdm(range(len(train_dataset))):
+            sample = train_dataset[i]
+            labels = sample["gt_labels"].numpy().tolist()
+            for label in labels:
+                assert 0 <= label <= 66, F"sample index: {i}, labels is: {labels}"
 
 
 def main():

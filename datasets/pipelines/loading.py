@@ -46,7 +46,7 @@ class LoadImageFromFileWLP(LoadImageFromFile):
 
     def __call__(self, results):
         # if self.file_client is None:
-            # self.file_client = mmcv.FileClient(**self.file_client_args)
+        # self.file_client = mmcv.FileClient(**self.file_client_args)
 
         if results["img_prefix"] is not None:
             filename = os.path.join(results["img_prefix"],
@@ -79,6 +79,6 @@ class LoadImageFromFileWLP(LoadImageFromFile):
                                        to_rgb=False)
 
         bins = np.array(range(-99, 102, 3))
-        results["gt_labels"] = np.digitize(angles, bins) - 1
+        results["gt_labels"] = np.clip(np.digitize(angles, bins) - 1, 0, len(bins) - 1)
         results["gt_angles"] = np.array(angles, dtype=np.float32)
         return results
